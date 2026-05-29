@@ -22,5 +22,5 @@ FROM alpine:latest
 WORKDIR /app
 COPY --from=backend-builder /app/todo-app .
 # Expose the port (Render will define this dynamically)
-EXPOSE 10000
+EXPOSE 8080
 CMD ["./todo-app"]

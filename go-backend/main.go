@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"embed"
 	"errors"
+	"fmt"
 	"io/fs"
 	"log"
 	"net/http"
@@ -92,8 +93,13 @@ func main() {
 	p.SetHTTP1(true)
 	p.SetUnencryptedHTTP2(true)
 
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080" // Fallback to 8080 for local development
+	}
+
 	server := &http.Server{
-		Addr:         ":8080",
+		Addr:         fmt.Sprintf(":%s", port),
 		Handler:      todoRouter,
 		ReadTimeout:  10 * time.Second,
 		WriteTimeout: 10 * time.Second,
@@ -110,7 +116,7 @@ func main() {
 
 	// Start the HTTP server in a separate background goroutine.
 	go func() {
-		log.Println("Starting Todo API server on port 8080...")
+		log.Printf("Starting Todo API server on port %s", port)
 		// ListenAndServe returns http.ErrServerClosed when the server shuts down gracefully.
 		if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 			shutdownError <- err
