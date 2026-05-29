@@ -1,5 +1,5 @@
 # Step 1: Build the React frontend
-FROM node:20-alpine AS frontend-builder
+FROM node:24-alpine AS frontend-builder
 WORKDIR /app/react-frontend
 COPY react-frontend/package*.json ./
 RUN npm install
@@ -7,7 +7,7 @@ COPY react-frontend/ ./
 RUN npm run build
 
 # Step 2: Build the Go backend
-FROM golang:1.22-alpine AS backend-builder
+FROM golang:1.26-alpine AS backend-builder
 WORKDIR /app
 # Copy the built frontend from Step 1 into the backend's dist folder
 COPY --from=frontend-builder /app/react-frontend/dist ./go-backend/dist
