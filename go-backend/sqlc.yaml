@@ -1,0 +1,12 @@
+version: "2"
+sql:
+  - engine: "postgresql"
+    queries: "./db/queries"          # Where you write queries
+    schema: "./db/migrations"        # 💡 sqlc reads Goose migrations directly!
+    gen:
+      go:
+        package: "dbgen"             # The Go package name
+        out: "./db/generated"        # Where Go code is dumped
+        sql_package: pgx/v5
+        emit_json_tags: true
+        emit_pointers_for_null_types: true

@@ -1,0 +1,12 @@
+# Node/Frontend
+react-frontend/node_modules/
+react-frontend/dist/
+
+# Go/Backend
+go-backend/dist/
+todo-app
+todo-app.exe
+
+# OS files
+.DS_Store
+Thumbs.db
